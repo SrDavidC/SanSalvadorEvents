@@ -4,24 +4,19 @@ import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.plugin.java.JavaPlugin;
+import srdqrk.me.sansalvadorevents.commands.GeneralCommands;
 
 public final class SanSalvadorEvents extends JavaPlugin {
 
-public static SanSalvadorEvents core;
+    public static SanSalvadorEvents core;
 
-    @Override
-    public void onLoad() {
-
-    }
-
+    private GeneralCommands generalCommands;
     @Override
     public void onEnable() {
-        CommandAPI.onEnable();
-
-
-
         core = this;
 
+        CommandAPI.onEnable();
+        generalCommands = new GeneralCommands();
         // Register commands, listeners etc.
     }
 
