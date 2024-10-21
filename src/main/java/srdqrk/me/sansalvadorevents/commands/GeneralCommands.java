@@ -6,14 +6,20 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import srdqrk.me.sansalvadorevents.SanSalvadorEvents;
 import srdqrk.me.sansalvadorevents.scenarios.GlobalScenarios;
+import srdqrk.me.sansalvadorevents.scenarios.VolcanicEvent;
 
 public class GeneralCommands {
     private final GlobalScenarios globalScenarios;
+    private final VolcanicEvent volcanicEvent;
     private boolean isGlowingActive;
+
+    private boolean isVolcanicEventActive;
 
     public GeneralCommands() {
         this.globalScenarios = new GlobalScenarios(SanSalvadorEvents.core);
+        this.volcanicEvent = new VolcanicEvent(SanSalvadorEvents.core);
         this.isGlowingActive = false;
+        this.isVolcanicEventActive = false;
         this.registerCommands();
     }
 
@@ -33,6 +39,18 @@ public class GeneralCommands {
                         Bukkit.getOnlinePlayers().forEach(player -> {
                             player.sendMessage(isGlowingActive ? "El glowing ha sido activado." : "El glowing ha sido desactivado.");
                         });
+                    })
+                    .register();
+
+            new CommandAPICommand("toggleVolcanicEvent")
+                    .executes((CommandSender sender, CommandArguments args) -> {
+                        if (isVolcanicEventActive) {
+                            sender.sendMessage("El evento volcánico ya está activo.");
+                        } else {
+                            sender.sendMessage("¡OH, NO! El volcán de San Salvador ha entrado en erupción.");
+                            volcanicEvent.startEvent();
+                            isVolcanicEventActive = true;
+                        }
                     })
                     .register();
     }
