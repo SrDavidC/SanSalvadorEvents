@@ -1,0 +1,7 @@
+name: SanSalvadorEvents
+version: '${version}'
+main: srdqrk.me.sansalvadorevents.SanSalvadorEvents
+api-version: '1.20'
+authors: [SrDqrk]
+description: Volcano Event, Mist Event and Security Event manager
+depend: [CommandAPI]
