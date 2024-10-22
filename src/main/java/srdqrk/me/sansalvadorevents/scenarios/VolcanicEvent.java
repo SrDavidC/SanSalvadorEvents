@@ -10,6 +10,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import srdqrk.me.sansalvadorevents.util.Util;
 
 import java.util.Random;
 
@@ -34,7 +35,8 @@ public class VolcanicEvent {
         }
 
         isActive = true;
-
+        Util.titleMessage("\uE010 \uE011 \uE012");
+        Util.broadcastMessage("\uE004 &r &f¡Alejate de las zonas peligrosas para protegerte de las rocas volcánicas!");
         new BukkitRunnable() {
             private int elapsedTime = 0;
 
@@ -78,7 +80,7 @@ public class VolcanicEvent {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (meteorite.getLocation().getY() <= 0) {
+                if (meteorite.getLocation().getY() <= -200) {
                     meteorite.remove();
                     return;
                 }

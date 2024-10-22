@@ -5,3 +5,7 @@ api-version: '1.20'
 authors: [SrDqrk]
 description: Volcano Event, Mist Event and Security Event manager
 depend: [CommandAPI]
+permissions:
+  SanSalvadorAdmin:
+    description: Permiso para administrar los eventos de San Salvador.
+    default: op
