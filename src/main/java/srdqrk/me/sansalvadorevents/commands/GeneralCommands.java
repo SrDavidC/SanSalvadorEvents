@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import srdqrk.me.sansalvadorevents.SanSalvadorEvents;
 import srdqrk.me.sansalvadorevents.scenarios.GlobalScenarios;
 import srdqrk.me.sansalvadorevents.scenarios.VolcanicEvent;
+import srdqrk.me.sansalvadorevents.util.Util;
 
 public class GeneralCommands {
     private final GlobalScenarios globalScenarios;
@@ -27,12 +28,13 @@ public class GeneralCommands {
                 .withPermission("SanSalvadorAdmin")
                 .executes((CommandSender sender, CommandArguments args) -> {
                     if (isGlowingActive) {
-                        sender.sendMessage("El glowing ya está activo.");
+                        sender.sendMessage("\uE004 El glowing ya está activo.");
                     } else {
-                        sender.sendMessage("Activando glowing para todos los jugadores.");
+                        sender.sendMessage("\uE004 Activando glowing para todos los jugadores.");
                         globalScenarios.startGlowingCycle();
+                        Util.broadcastSound("hexacreators:xocolatl.audio_4");
                         isGlowingActive = true;
-                        Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage("El glowing ha sido activado."));
+                        Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage("\uE004 El glowing ha sido activado."));
                     }
                 })
                 .register();
@@ -41,9 +43,9 @@ public class GeneralCommands {
                 .withPermission("SanSalvadorAdmin")
                 .executes((CommandSender sender, CommandArguments args) -> {
                     if (!isGlowingActive) {
-                        sender.sendMessage("El glowing ya está desactivado.");
+                        sender.sendMessage("\uE004 El glowing ya está desactivado.");
                     } else {
-                        sender.sendMessage("Desactivando glowing para todos los jugadores.");
+                        sender.sendMessage("\uE004 Desactivando glowing para todos los jugadores.");
                         globalScenarios.cancelGlowingCycle();
                         isGlowingActive = false;
                         Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage("El glowing ha sido desactivado."));
@@ -54,10 +56,11 @@ public class GeneralCommands {
         new CommandAPICommand("volcanicEventOn")
                 .withPermission("SanSalvadorAdmin")
                 .executes((CommandSender sender, CommandArguments args) -> {
-                    if (isVolcanicEventActive) {
+                    if (this.volcanicEvent.isActive()) {
                         sender.sendMessage("El evento volcánico ya está activo.");
                     } else {
-                        sender.sendMessage("¡OH, NO! El volcán de San Salvador ha entrado en erupción.");
+                        Util.broadcastMessage("\uE004 ¡OH, NO! El volcán de San Salvador ha entrado en erupción.");
+                        Util.broadcastSound("hexacreators:xocolatl.audio_2");
                         volcanicEvent.startEvent();
                         isVolcanicEventActive = true;
                     }
@@ -68,9 +71,9 @@ public class GeneralCommands {
                 .withPermission("SanSalvadorAdmin")
                 .executes((CommandSender sender, CommandArguments args) -> {
                     if (!isVolcanicEventActive) {
-                        sender.sendMessage("El evento volcánico ya está desactivado.");
+                        sender.sendMessage("\uE004 El evento volcánico ya está desactivado.");
                     } else {
-                        sender.sendMessage("Deteniendo el evento volcánico.");
+                        sender.sendMessage("\uE004 Deteniendo el evento volcánico.");
                         volcanicEvent.stopEvent();
                         isVolcanicEventActive = false;
                     }
@@ -81,9 +84,10 @@ public class GeneralCommands {
                 .withPermission("SanSalvadorAdmin")
                 .executes((CommandSender sender, CommandArguments args) -> {
                     if (globalScenarios.isFogActive()) {
-                        sender.sendMessage("El evento de neblina ya está activo.");
+                        sender.sendMessage("\uE004 El evento de neblina ya está activo.");
                     } else {
-                        sender.sendMessage("Iniciando el evento de neblina...");
+                        sender.sendMessage("\uE004 Iniciando el evento de neblina...");
+                        Util.broadcastSound("hexacreators:xocolatl.audio_3");
                         globalScenarios.startFogEvent();
                     }
                 })
@@ -93,13 +97,19 @@ public class GeneralCommands {
                 .withPermission("SanSalvadorAdmin")
                 .executes((CommandSender sender, CommandArguments args) -> {
                     if (!globalScenarios.isFogActive()) {
-                        sender.sendMessage("El evento de neblina ya está desactivado.");
+                        sender.sendMessage("\uE004 El evento de neblina ya está desactivado.");
                     } else {
-                        sender.sendMessage("Deteniendo el evento de neblina...");
+                        sender.sendMessage("\uE004 Deteniendo el evento de neblina...");
                         globalScenarios.stopFogEvent();
                     }
                 })
                 .register();
+    }
+
+    public void onDisable() {
+        globalScenarios.cancelGlowingCycle();
+        globalScenarios.stopFogEvent();
+        volcanicEvent.stopEvent();
     }
 
 

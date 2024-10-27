@@ -61,7 +61,7 @@ shadowJar {
 
     relocate("dev.jorel.commandapi", "srdqrk.me.sansalvadorevents")
 */
-    destinationDirectory = file('D:\\LocalHosts\\paper124\\plugins')
+    destinationDirectory = file('D:\\LocalHosts\\paper_1_21_1\\plugins')
 }
 
 build.dependsOn shadowJar
